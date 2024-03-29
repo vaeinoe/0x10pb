@@ -2,30 +2,30 @@
 
 ## What?
 
-A simple MIDI CC controller in 200x75mm footprint, with 16 potentiometers x 4 banks. USB-C for flashing an USB MIDI device communication, TRS MIDI type A output, option for battery power. 
+Another MIDI CC controller in 200x75mm footprint. 16 potentiometers x 4 banks. USB-C for flashing and MIDI device communication, hardware TRS MIDI type A output. Option for battery power.
 
-Per knob + per bank MIDI CCs, channels and scaling are programmable in the firmware. Sends identical messages via both USB and TRS.
+MIDI CCs, channels and scaling per knob for all the four banks are programmable in the firmware (not on the fly via SysEx, at least not yet). Sends identical messages via both USB and TRS.
 
 ## Why?
 
-There are also many small DIY MIDI controllers more refined than this one, but
+There are many small DIY MIDI controllers more refined than this one, but I wanted something to use with battery-powered portable electronic instruments like the Dirtywave M8 and Teenage Engineering OP-1 Field, and
 
- 1. I couldn't find anything that was battery powered and with both USB and hardware serial MIDI output to use with eg. Dirtywave M8 and Teenage Engineering OP-1 Field. It's kind of a letdown to have a portable instrument with an internal battery and then have to carry around a power bank just for an auxiliary controller.
- 2. Most of the simple controllers are missing banks / pages. Quite often you want to control more than 16 parameters without remapping, but don't need to control them all at the same time.
+ 1. I couldn't find anything that was battery powered and with both USB and hardware serial MIDI output. It's kind of a letdown to have a portable instrument with an internal battery and then have to carry around a power bank just for an auxiliary controller. Especially as most of these instruments don't act as USB hosts so you can't even power controllers directly from them.
+ 2. Most of the simple controllers are missing any kind of bank / page system. Quite often you want to control more than 16 parameters without remapping, but don't need to control them all at the same time.
 
-Then a friend wanted one too, so had to design one.
+Then a friend wanted one like this too for similar reasons, so I had to actually design one.
 
 ## How?
 
-There's not much to it. A custom carrier board with a power switch (because of the battery power), a bank switch button, two LEDs that indicate which bank is active (00, 01, 10, 11), TRS MIDI port and associated circuitry, 16 pots read via a single multiplexer. 
+There's not much to it. A custom carrier board with a power switch, a bank button, two LEDs that indicate which bank is active (00, 01, 10, 11), TRS MIDI port and associated circuitry, and 16 pots read via a single multiplexer.
 
-[Adafruit Feather RP2040](https://learn.adafruit.com/adafruit-feather-rp2040-pico) is used as the brain, mainly because it conveniently has both a USB-C port and battery power / charging circuit built in.
+[Adafruit Feather RP2040](https://learn.adafruit.com/adafruit-feather-rp2040-pico) is used as the brain. Mainly because it conveniently has both a USB-C port and battery power / charging circuit built in.
 
 ### Hardware
 
 First you'll need to get a carrier PCB. KiCad project and Gerbers are included for ordering your own. Once you have that, here's a list of parts you'll need to populate the board:
 
- - Adafruit Feather RP2040 plus suitable headers (eg. Adafruit slim ones): PCB will likely work with almost any Feather but you probably need to modify pin mapping and use a different core lib
+ - Adafruit Feather RP2040 plus suitable headers (eg. Adafruit slim ones): PCB will likely work with almost any Feather but you may need to modify pin mapping and use a different core lib
  - Optional: 3.7V LiPoly battery with Feather compatible (JST-PH) connector - I use a tiny 500mA one
  - U1: CD74HC4067M (SOIC)
  - U2: 74LVC1G07 (SOT-23-5 / SOT-25)
@@ -46,6 +46,8 @@ The repository includes a simple "sandwich" type panel design. If you use that, 
 
 If you use removable header stack for the Feather, you may also want to secure the board in place with a short M2.5 spacer / screw and nut. Otherwise it may slip off.
 
+For keeping the battery in place, use something like 3M Dual Lock or generic velcro to attach it to the bottom panel. That way you can actually remove and replace the battery if you need to.
+
 ### Firmware + bank mappings
 
 Firmware can be edited and flashed with [Arduino IDE](https://www.arduino.cc/en/software). You'll also need to install these libraries (see instructions in respective repositories):
@@ -57,4 +59,4 @@ After you have the IDE and the libraries installed, open the included Arduino sk
 
 If the device isn't automatically recognized and you get an upload error, you may have to keep the "bootsel" button (in the back end of the board) pressed, quickly press "reset" towards the front of the board and finally release "bootsel" to get the board to bootloader mode. Then try uploading again.
 
-The sketch also  includes the hardcoded MIDI CC mappings for all the four banks. For now, whenever you want to edit the mappings, edit the source file according to instructions in the comments, then upload a new version to the Feather.
+The sketch also includes the hardcoded MIDI CC mappings for all the four banks. For now, whenever you want to edit the mappings, edit the source file according to instructions in the comments, then upload a new version to the Feather.
