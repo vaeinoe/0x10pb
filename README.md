@@ -1,8 +1,10 @@
 # 0x10pb
 
+![0x10pb](https://github.com/vaeinoe/0x10pb/assets/3530964/44cfffd2-58b8-4ef4-a45c-6604f5d691c7)
+
 ## What?
 
-Another MIDI CC controller in 200x75mm footprint. 16 potentiometers x 4 banks. USB-C for flashing and MIDI device communication, hardware TRS MIDI type A output. Option for battery power.
+Yet another MIDI CC controller in 200x75mm footprint. 16 potentiometers x 4 banks. USB-C for flashing and MIDI device communication, hardware TRS MIDI type A output. Option for battery power.
 
 MIDI CCs, channels and scaling per knob for all the four banks are programmable in the firmware (not on the fly via SysEx, at least not yet). Sends identical messages via both USB and TRS.
 
@@ -40,13 +42,13 @@ First you'll need to get a carrier PCB. KiCad project and Gerbers are included f
  - SW2: Omron B3F-10xx series tactile switch + cap
  - RV1-RV16: 10k standard 9mm footprint potentiometers, eg. Alpha 9mm, plus relatively slim knobs such as Davies 1900h clones
 
-If you can (hand) solder SOIC and 0603, populating the board is going to be fast and straightforward. Just mind the build order - SMT components first, and if you don't use removable headers for the Feather you might want to solder the pots before that so the Feather won't get in the way.
+If you can (hand) solder SOIC and 0603, populating the board is going to be fast and straightforward. Just mind the build order - SMT components first, and if you don't use removable headers for the Feather you might want to solder the pots before that so the Feather won't get in the way. Oh, and mind the SPST power switch polarity if you actually want "power off" to be on the left and "power on" on the right...
 
 The repository includes a simple "sandwich" type panel design. If you use that, you'll also need some M3 spacers and screws. The exact height will depend on eg. how you mount the Feather. Try eg. 6x 10-12mm male-female ones for the front side (just attaching the panel using pots and power switch is OK too), 6x 17-18mm female-female ones for the back, plus 12x short screws to put it together. 
 
-If you use removable header stack for the Feather, you may also want to secure the board in place with a short M2.5 spacer / screw and nut. Otherwise it may slip off.
+If you use removable header stack for the Feather, you may also want to secure the board in place with a short M2.5 spacer / screw and nut. Otherwise it may slip off during weeks / months / years of use.
 
-For keeping the battery in place, use something like 3M Dual Lock or generic velcro to attach it to the bottom panel. That way you can actually remove and replace the battery if you need to.
+For keeping the battery in place, use something like 3M Dual Lock or generic velcro to attach it to the bottom of the PCB or bottom panel. That way you can actually remove and replace the battery if you need to, but it won't move around.
 
 ### Firmware + bank mappings
 
